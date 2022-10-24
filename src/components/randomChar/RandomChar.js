@@ -2,6 +2,7 @@ import { Component } from 'react';
 import './randomChar.scss';
 import mjolnir from '../../resources/img/mjolnir.png';
 import Spinner from '../../components/spinner/spinner';
+import ErrorMessage from '../errorMessage/ErrorMessage';
 import MarvelService from '../../services/MarvelService';
 
 class RandomChar extends Component {
@@ -12,22 +13,35 @@ class RandomChar extends Component {
     state = {
         char: {},
         loading: true,
+        error: false,
     }
     marvelService = new MarvelService();
     onCharLoaded = (char) => {
-        this.setState({char , loading: false})
+        this.setState({ char, loading: false })
+    }
+    onError = () => {
+        this.setState({
+            loading: false,
+            error: true
+        })
     }
     updateChar = () => {
         const id = Math.floor(Math.random() * (1011400 - 1011000) + 1011000);
         this.marvelService
             .getCharacter(id)
             .then(this.onCharLoaded)
+            .catch(this.onError)
     }
     render() {
-        const { char, loading } = this.state;
+        const { char, loading, error } = this.state;
+        const errorMessage = error ? <ErrorMessage /> : null;
+        const spinner = loading ? <Spinner /> : null;
+        const content = !(loading || error) ? <View char={char} /> : null;
         return (
             <div className="randomchar" >
-{loading ? <Spinner/> : <View char={char}/>}
+                {errorMessage}
+                {spinner}
+                {content}
                 <div className="randomchar__static">
                     <p className="randomchar__title">
                         Random character for today!<br />
@@ -45,9 +59,9 @@ class RandomChar extends Component {
         )
     }
 }
-    const View = ({ char }) => {
-        const {name, description, thumbnail, homepage, wiki} = char;
-        return (
+const View = ({ char }) => {
+    const { name, description, thumbnail, homepage, wiki } = char;
+    return (
         <div className="randomchar__block">
             <img src={thumbnail} alt="Random character" className="randomchar__img" />
             <div className="randomchar__info">
@@ -65,6 +79,7 @@ class RandomChar extends Component {
                 </div>
             </div>
         </div>
-    )}
+    )
+}
 
 export default RandomChar;
