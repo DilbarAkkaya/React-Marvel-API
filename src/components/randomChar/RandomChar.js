@@ -8,7 +8,6 @@ import MarvelService from '../../services/MarvelService';
 class RandomChar extends Component {
     constructor(props) {
         super(props);
-        this.updateChar();
         console.log('constructor')
     }
     state = {
@@ -19,6 +18,7 @@ class RandomChar extends Component {
     marvelService = new MarvelService();
 
     componentDidMount() {
+        this.updateChar();
         console.log('mount')
     }
     componentWillUnmount(){
