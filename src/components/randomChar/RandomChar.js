@@ -6,10 +6,6 @@ import ErrorMessage from '../errorMessage/ErrorMessage';
 import MarvelService from '../../services/MarvelService';
 
 class RandomChar extends Component {
-    constructor(props) {
-        super(props);
-        console.log('constructor')
-    }
     state = {
         char: {},
         loading: true,
@@ -19,16 +15,15 @@ class RandomChar extends Component {
 
     componentDidMount() {
         this.updateChar();
-        console.log('mount')
+        this.timerId = setInterval(this.updateChar, 3000)
     }
-    componentWillUnmount(){
-        console.log('unmount')
+    componentWillUnmount() {
+        clearInterval(this.timerId)
     }
     onCharLoaded = (char) => {
         this.setState({ char, loading: false })
-        console.log('update')
     }
-    
+
     onError = () => {
         this.setState({
             loading: false,
@@ -43,7 +38,6 @@ class RandomChar extends Component {
             .catch(this.onError)
     }
     render() {
-        console.log('render')
         const { char, loading, error } = this.state;
         const errorMessage = error ? <ErrorMessage /> : null;
         const spinner = loading ? <Spinner /> : null;
