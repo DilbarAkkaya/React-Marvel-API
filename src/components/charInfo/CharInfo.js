@@ -10,9 +10,9 @@ class CharInfo extends Component {
         error: false,
     }
     marvelService = new MarvelService();
-componentDidMount (){
-    this.updateChar();
-}
+    componentDidMount() {
+        this.updateChar();
+    }
     updateChar = () => {
         const { charId } = this.props;
         if (!charId) {
@@ -44,7 +44,16 @@ componentDidMount (){
     render() {
         return (
             <div className="char__info">
-                <div className="char__basics">
+                
+            </div>
+        )
+    }
+
+}
+const View = ({char}) => {
+    return (
+<>
+<div className="char__basics">
                     <img src={thor} alt="abyss" />
                     <div>
                         <div className="char__info-name">thor</div>
@@ -94,10 +103,8 @@ componentDidMount (){
                         Avengers (1996) #1
                     </li>
                 </ul>
-            </div>
-        )
-    }
-
+</>
+    )
 }
 
 export default CharInfo;
