@@ -12,7 +12,7 @@ class CharInfo extends Component {
         error: false,
     }
     marvelService = new MarvelService();
-    
+
     componentDidMount() {
         this.updateChar();
     }
@@ -90,6 +90,7 @@ const View = ({char}) => {
                 <div className="char__comics">Comics:</div>
                 <ul className="char__comics-list">
                 {comics.map((item,i)=>{
+                    if (i>9) return;
                         return (
                             <li key={i} className="char__comics-item">{item.name}</li>
                         )
