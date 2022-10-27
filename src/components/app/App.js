@@ -4,6 +4,7 @@ import RandomChar from "../randomChar/RandomChar";
 import CharList from "../charList/CharList";
 import CharInfo from "../charInfo/CharInfo";
 import ErrorBoundary from "../errorBoundary/ErrorBiundary";
+import PropTypes from 'prop-types';
 
 import decoration from '../../resources/img/vision.png';
 class App extends Component {
@@ -32,6 +33,9 @@ class App extends Component {
         )
     }
 
+}
+App.propTypes = {
+  onCharSelected: PropTypes.func.isRequired
 }
 
 export default App;
